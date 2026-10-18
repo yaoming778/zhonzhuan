@@ -12,7 +12,7 @@
     src="https://g.alicdn.com/de/prismplayer/2.16.0/aliplayer-min.js"></script>
   <style>
     body {
-      background-color: #0f172a; /* 配合安全确认页的深色背景，也可改回 black */
+      background-color: #0f172a; /* 配合安全确认页的深色背景 */
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -365,23 +365,19 @@
     }
   </style>
 
-  <!-- PC端拦截脚本（已修改为展示白色全屏“什么都没有哦”页面） -->
+  <!-- 精准判断移动端 / 电脑端拦截脚本 -->
   <script type="text/javascript">
-    var system = {};
-    var p = navigator.platform;
-    var u = navigator.userAgent;
+    (function () {
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      
+      // 检测是否为移动端（手机 / 平板）
+      var isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(userAgent);
 
-    system.win = p.indexOf("Win") == 0;
-    system.mac = p.indexOf("Mac") == 0;
-    system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
-    if (system.win || system.mac || system.x11) { // 如果是PC端
-      if (u.indexOf('Windows Phone') > -1) {  // win手机端
-        // 不做拦截
-      } else {
-        // 在页面加载完成前直接覆盖主体内容，展示全屏“什么都没有哦”
+      // 如果【不是】移动端（即桌面电脑环境），则显示“什么都没有哦”
+      if (!isMobile) {
         document.write('<div id="pc-block-screen">什么都没有哦</div>');
       }
-    }
+    })();
   </script>
 
 </body>
