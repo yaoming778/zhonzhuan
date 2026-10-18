@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>喜欢就和好兄弟分享</title>
+  <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.16.0/skins/default/aliplayer-min.css" />
+  <script type="text/javascript" charset="utf-8"
+    src="https://g.alicdn.com/de/prismplayer/2.16.0/aliplayer-min.js"></script>
+  <style>
+    body {
+      background-color: #0f172a; /* 配合安全确认页的深色背景，也可改回 black */
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* 安全确认引导页样式 */
+    #safety-verify-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #0f172a;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .status-badge {
+      background: #f1f5f9;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #94a3b8;
+      border-radius: 50%;
+    }
+
+    .icon-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .shield-icon {
+      width: 48px;
+      height: 48px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .title-text h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #0f172a;
+    }
+
+    .title-text p {
+      margin: 4px 0 0;
+      font-size: 11px;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+    }
+
+    .desc-text {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .warning-box {
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .continue-btn {
+      width: 100%;
+      background-color: #111827;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.2s;
+    }
+
+    .continue-btn:active {
+      background-color: #374151;
+    }
+
+    .sub-tip {
+      text-align: center;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 12px;
+      margin-bottom: 24px;
+    }
+
+    .card-footer {
+      border-top: 1px solid #f1f5f9;
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .page-footer-tip {
+      text-align: center;
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 20px;
+      line-height: 1.4;
+    }
+
+    /* 视频播放主内容区域（默认隐藏） */
+    #main-content {
+      display: none;
+      background-color: black;
+      min-height: 100vh;
+      padding-bottom: 30px;
+      box-sizing: border-box;
+    }
+
+    /* === 美化后的进群按钮样式 === */
+    #jumpButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 90%;
+      max-width: 400px;
+      margin: 20px auto;
+      
+      /* 高级渐变色背景与质感微调 */
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: white;
+      padding: 15px 24px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      
+      /* 模拟玻璃高光倒角及柔和绿色外发光 */
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.2), 
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15), 
+        0 4px 20px rgba(5, 150, 105, 0.4);
+        
+      transition: all 0.25s ease;
+    }
+
+    #jumpButton:hover {
+      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.25), 
+        0 6px 24px rgba(5, 150, 105, 0.6);
+      transform: translateY(-1px);
+    }
+
+    #jumpButton:active {
+      transform: translateY(1px);
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.2), 
+        0 2px 8px rgba(5, 150, 105, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 第一步：安全确认引导页 -->
+  <div id="safety-verify-container">
+    <div class="card">
+      <div class="card-header">
+        <span style="display: flex; align-items: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+          内容访问
+        </span>
+        <div class="status-badge">
+          <div class="status-dot"></div>
+          等待确认
+        </div>
+      </div>
+
+      <div class="icon-title">
+        <div class="shield-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <div class="title-text">
+          <h2>安全确认</h2>
+          <p>CONTENT ACCESS</p>
+        </div>
+      </div>
+
+      <div class="desc-text">
+        您即将进入内容页面。<br>
+        确认继续后，即可开始观看。
+      </div>
+
+      <div class="warning-box">
+        ⚠️ 请自行判断内容与链接的可信度，注意保护个人信息。
+      </div>
+
+      <button class="continue-btn" id="verifyBtn">
+        继续观看 &rarr;
+      </button>
+      <div class="sub-tip">&gt; 点击后进入内容页面</div>
+
+      <div class="card-footer">
+        <span>访问时间·北京时间</span>
+        <span id="currentTime">2026/10/18 21:49:47</span>
+      </div>
+    </div>
+
+    <div class="page-footer-tip">
+      此页面仅用于访问确认，<br>不代表内容已通过安全检测或第三方认证。
+    </div>
+  </div>
+
+
+  <!-- 第二步：原视频播放及按钮页面（默认隐藏，点击后加载） -->
+  <div id="main-content">
+    <div class="prism-player" id="player-con"></div>
+    <!-- 美化后的进群按钮，带右侧箭头图标 -->
+    <button id="jumpButton">
+      新瓜群进群链接 
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </button>
+  </div>
+
+
+  <script>
+    // 动态实时更新当前北京时间
+    function updateTime() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('currentTime').innerText = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+    }
+    updateTime();
+
+    // 获取URL中的视频地址参数
+    function getVideoUrlParam() {
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const encodedUrl = urlSearchParams.get('u');
+      if (!encodedUrl) return '';
+      try {
+        return atob(encodedUrl); // 解码 Base64 链接
+      } catch (e) {
+        return '';
+      }
+    }
+
+    // 点击“继续观看”后的逻辑
+    document.getElementById('verifyBtn').addEventListener('click', function () {
+      // 1. 隐藏安全确认页，显示视频主内容页
+      document.getElementById('safety-verify-container').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+
+      // 2. 动态加载统计代码脚本 (原先的 tj.js)
+      var statScript = document.createElement('script');
+      statScript.type = 'text/javascript';
+      statScript.charset = 'utf-8';
+      statScript.src = 'https://cs.xssh.ren/tj.js';
+      document.body.appendChild(statScript);
+
+      // 3. 初始化阿里云播放器
+      var player = new Aliplayer({
+        "id": "player-con",
+        "source": getVideoUrlParam(),
+        "width": "100%",
+        "height": "600px",
+        "autoplay": true,
+        "isLive": false,
+        "rePlay": false,
+        "playsinline": true,
+        "preload": true,
+        "controlBarVisibility": "hover",
+        "useH5Prism": true
+      }, function (player) {
+        console.log("The player is created");
+      });
+
+      // 4. 绑定群跳转按钮事件
+      var jumpButton = document.getElementById('jumpButton');
+      jumpButton.addEventListener('click', function () {
+        var url = 'https://mp.weixin.qq.com/s/EwMupnObyvf00M7Q81jUww';
+        window.location.href = url;
+      });
+    });
+  </script>
+
+  <!-- 禁止滚动 -->
+  <style>
+    html, body {
+      height: 100%;
+      overflow: hidden; /* 禁止滚动 */
+      touch-action: none;
+    }
+  </style>
+
+  <!-- PC端拦截脚本 -->
+  <script type="text/javascript">
+    var system = {};
+    var p = navigator.platform;
+    var u = navigator.userAgent;
+
+    system.win = p.indexOf("Win") == 0;
+    system.mac = p.indexOf("Mac") == 0;
+    system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+    if (system.win || system.mac || system.xll) { // 如果是PC端
+      if (u.indexOf('Windows Phone') > -1) {  // win手机端
+        // 不做跳转
+      } else {
+        window.location.href = "https://qqq.gtimg.cn/music/photo_new/T053XD000001jThhJ0znpBf.png";
+      }
+    }
+  </script>
+
+</body>
+
+</html>
